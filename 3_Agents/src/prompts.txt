@@ -1,0 +1,14 @@
+Write a well-documented Python program implementing a goal-based agent for the warehouse navigation problem. The map is:
+#####################
+#S....#............G#
+#.##....##########..#
+#....##.............#
+#.######.###.#.###..#
+#........#..........#
+#####################
+The program should:
+- represent the warehouse as a two-dimensional grid;
+- determine a collision-free path from S to G;
+- avoid all obstacles;
+- print either the path found or a suitable message if no path exists;
+- explain the search algorithm that has been chosen and why it is appropriate;

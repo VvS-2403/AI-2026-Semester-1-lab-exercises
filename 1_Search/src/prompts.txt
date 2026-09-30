@@ -1,0 +1,21 @@
+# Prompt used to generate the search code
+
+I am implementing a simple goal-based search agent in Python.
+The environment is a grid represented by an ASCII map. The agent starts at S
+and must reach G. The symbols # represent obstacles and . represents free cells.
+The agent can move up, down, left, or right, and every movement has cost 1.
+Implement both BFS and A* search.
+Use Manhattan distance as the heuristic for A*:
+h(n) = |x - xG| + |y - yG|.
+
+The program should:
+- represent grid positions as states;
+- maintain an appropriate frontier;
+- calculate g(n), h(n) and f(n);
+- avoid repeatedly expanding the same state;
+- reconstruct the path when the goal is reached;
+- report the path and its length;
+- report the number of states expanded.
+
+Keep the implementation simple and explain the main components of the code.
+Also provide a few test cases and a main runner to execute the search on the grid string.

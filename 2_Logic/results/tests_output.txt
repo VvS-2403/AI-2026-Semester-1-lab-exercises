@@ -1,0 +1,26 @@
+--- Test A: Solvable Problem ---
+Plan found!
+Initial State: {'At(Package,A)', 'At(Robot,A)'}
+Step 1: PickUp(Package,A)
+State: frozenset({'Holding(Package)', 'At(Robot,A)'})
+Step 2: Move(A,B)
+State: frozenset({'Holding(Package)', 'At(Robot,B)'})
+Step 3: Move(B,C)
+State: frozenset({'At(Robot,C)', 'Holding(Package)'})
+Step 4: Drop(Package,C)
+State: frozenset({'At(Package,C)', 'At(Robot,C)'})
+
+--- Test B: Impossible Problem ---
+No plan found
+
+--- Test C: Irrelevant Actions ---
+Plan found!
+Initial State: {'At(Package,A)', 'At(Robot,A)'}
+Step 1: PickUp(Package,A)
+State: frozenset({'Holding(Package)', 'At(Robot,A)'})
+Step 2: Move(A,B)
+State: frozenset({'Holding(Package)', 'At(Robot,B)'})
+Step 3: Move(B,C)
+State: frozenset({'At(Robot,C)', 'Holding(Package)'})
+Step 4: Drop(Package,C)
+State: frozenset({'At(Package,C)', 'At(Robot,C)'})

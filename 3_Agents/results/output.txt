@@ -1,0 +1,17 @@
+Warehouse Map:
+#####################
+#S....#............G#
+#.##....##########..#
+#....##.............#
+#.######.###.#.###..#
+#........#..........#
+#####################
+
+Explanation of Search Algorithm:
+The agent uses Breadth-First Search (BFS) to find the path.
+BFS systematically explores the warehouse layer by layer, guaranteeing the shortest path in an unweighted grid without getting stuck in infinite loops.
+
+Searching for path...
+
+Result Path (22 steps):
+['Right', 'Right', 'Right', 'Right', 'Down', 'Right', 'Right', 'Down', 'Right', 'Right', 'Right', 'Right', 'Right', 'Right', 'Right', 'Right', 'Right', 'Right', 'Right', 'Right', 'Up', 'Up']

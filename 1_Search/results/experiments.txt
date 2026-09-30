@@ -1,0 +1,39 @@
+Test: Original Map A* (Manhattan)
+Path found: True
+Length: 40
+States expanded: 64
+
+Test: Trivial Map A*
+Path found: True
+Length: 1
+States expanded: 2
+
+Test: No Solution Map A*
+Path found: False
+Length: 0
+States expanded: 9
+
+Test: Alternative Map A*
+Path found: True
+Length: 6
+States expanded: 15
+
+Test: Original Map BFS
+Path found: True
+Length: 40
+States expanded: 64
+
+Test: Original Map A* (h=0)
+Path found: True
+Length: 40
+States expanded: 64
+
+Test: Original Map A* (Euclidean)
+Path found: True
+Length: 40
+States expanded: 64
+
+Test: Original Map A* (2*Manhattan)
+Path found: True
+Length: 40
+States expanded: 67
