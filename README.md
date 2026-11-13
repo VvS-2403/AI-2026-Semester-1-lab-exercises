@@ -7,6 +7,7 @@ This repository contains the assignments and lab exercises for the AI course (CS
 - \1_Search\: State space search algorithms (BFS, DFS, A*, etc.)
 - \2_Logic\: Logical reasoning and inference mechanisms
 - \3_Agents\: Intelligent agents and environments
+- `6_Reinforcement_Learning`: Tabular Q-learning, DQN, and a two-robot DQN controller with collision avoidance
 
 
 Each directory contains:

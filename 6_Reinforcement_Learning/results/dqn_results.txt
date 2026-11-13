@@ -1,0 +1,18 @@
+=== Part II: DQN, single robot ===
+config: {"total_steps": 12000, "seed": 7, "gamma": 0.95, "lr": 0.001, "buffer_capacity": 20000, "batch_size": 64, "learning_starts": 500, "train_every": 4, "target_sync_every": 250, "eps_start": 1.0, "eps_end": 0.05, "eps_decay_frac": 0.8, "hidden": 64}
+torch 2.15.0+cpu, numpy 2.1.3
+episodes: 1266, optimizer updates: 2876, target syncs: 11
+training success rate last 100 episodes: 1.00; first success at episode 10
+
+Greedy DQN evaluation from (2,0):
+SUCCESS: steps=4, invalid=0, return=9.70
+  positions: (2, 0) -> (2, 1) -> (2, 2) -> (2, 3) -> (2, 4)
+  actions  : Right, Right, Right, Right
+
+Greedy DQN from additional start (0,0), no retraining:
+SUCCESS: steps=6, invalid=0, return=9.50
+  positions: (0, 0) -> (1, 0) -> (1, 1) -> (2, 1) -> (2, 2) -> (2, 3) -> (2, 4)
+  actions  : Down, Right, Down, Right, Right, Right
+
+Q_theta((2,0), .) = Up:7.33, Down:6.97, Left:6.68, Right:8.30, Wait:7.67
+Q-table  ((2,0), .) = Up:7.29, Down:7.29, Left:6.87, Right:8.29, Wait:7.77

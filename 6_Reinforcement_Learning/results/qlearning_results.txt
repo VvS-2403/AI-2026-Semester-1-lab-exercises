@@ -1,0 +1,58 @@
+=== Part I: tabular Q-learning ===
+alpha=0.2, gamma=0.95, seed=7, episodes=1500, epsilon 1.0->0.05 over first 1200 episodes, cutoff 40 steps
+Training: first success at episode 29; success rate last 100 episodes = 1.00; mean return last 100 = 9.65; timeouts overall = 166/1500
+
+Greedy evaluation from default start (2,0) [epsilon=0, no updates]:
+SUCCESS: steps=4, invalid=0, return=9.70
+  positions: (2, 0) -> (2, 1) -> (2, 2) -> (2, 3) -> (2, 4)
+  actions  : Right, Right, Right, Right
+
+Random policy, 100 episodes from (2,0):
+{
+  "runs": 100,
+  "success_frac": 0.18,
+  "timeout_frac": 0.82,
+  "mean_steps_success": 26.944444444444443,
+  "mean_invalid": 9.86,
+  "total_invalid": 986
+}
+
+Comparison table (Task 5):
+Measure                                  Random policy   Greedy Q-policy
+Goal reached                                      18 %               yes
+Steps to goal, if successful               26.9 (mean)                 4
+Timeouts                                          82 %                 0
+Invalid moves                             9.86 / run                 0
+
+Additional start (0,0) without retraining:
+SUCCESS: steps=6, invalid=0, return=9.50
+  positions: (0, 0) -> (1, 0) -> (2, 0) -> (2, 1) -> (2, 2) -> (2, 3) -> (2, 4)
+  actions  : Down, Down, Right, Right, Right, Right
+
+Learned Q-table (visited cells only):
+cell        Up    Down    Left   Right    Wait
+(0,0)    5.92    7.29    5.92    7.28    6.82
+(0,1)    6.38    7.77    6.82    6.38    7.28
+(0,3)    5.86    8.82    4.99    5.60    6.16
+(0,4)    2.64    8.63    3.07    3.49    3.85
+(1,0)    6.82    7.77    6.39    7.77    7.29
+(1,1)    7.29    8.29    7.29    6.87    7.77
+(1,3)    8.22    9.40    7.92    9.36    8.83
+(1,4)    4.53    9.99    6.88    7.33    7.31
+(2,0)    7.29    7.29    6.87    8.29    7.77
+(2,1)    7.77    7.77    7.77    8.83    8.29
+(2,2)    7.93    7.93    8.29    9.40    8.83
+(2,3)    8.83    8.83    8.83   10.00    9.40
+(3,0)    7.77    6.82    6.39    7.77    7.29
+(3,1)    8.29    7.29    7.29    6.87    7.77
+(3,3)    9.40    8.21    7.93    9.39    8.83
+(3,4)   10.00    6.68    8.34    7.91    8.97
+(4,0)    7.29    5.89    5.86    7.28    6.81
+(4,1)    7.77    6.37    6.82    6.38    7.28
+(4,3)    8.81    6.83    5.97    6.86    6.38
+(4,4)    8.84    4.15    5.39    5.75    6.23
+
+=== Optional: epsilon = 0 throughout (no exploration), same other settings ===
+seed 7: no-exploration -> first success ep 2, train success last 100 = 1.00, greedy: success in 4 steps | epsilon-greedy -> train success last 100 = 1.00, greedy: success in 4 steps
+seed 11: no-exploration -> first success ep 2, train success last 100 = 1.00, greedy: success in 4 steps | epsilon-greedy -> train success last 100 = 1.00, greedy: success in 4 steps
+seed 23: no-exploration -> first success ep 0, train success last 100 = 1.00, greedy: success in 4 steps | epsilon-greedy -> train success last 100 = 1.00, greedy: success in 4 steps

@@ -1,0 +1,84 @@
+{
+  "budget": "12000 env steps",
+  "seed": 7,
+  "default": {
+    "path": [
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "actions": [
+      "Right",
+      "Right",
+      "Right",
+      "Right"
+    ],
+    "success": true,
+    "timeout": false,
+    "steps": 4,
+    "invalid": 0,
+    "return": 9.7
+  },
+  "extra_start": {
+    "path": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "actions": [
+      "Down",
+      "Right",
+      "Down",
+      "Right",
+      "Right",
+      "Right"
+    ],
+    "success": true,
+    "timeout": false,
+    "steps": 6,
+    "invalid": 0,
+    "return": 9.5
+  }
+}

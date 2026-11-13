@@ -1,0 +1,123 @@
+== 1. Single-robot environment (positions set explicitly, no learner) ==
+ (0, 0)    Up (boundary -> stay)
+  [PASS] next position: got (0, 0), expected (0, 0)
+  [PASS] reward: got -1.0, expected -1.0
+  [PASS] terminated: got False, expected False
+  [PASS] truncated: got False, expected False
+ (1, 1) Right (obstacle (1,2) -> stay)
+  [PASS] next position: got (1, 1), expected (1, 1)
+  [PASS] reward: got -1.0, expected -1.0
+  [PASS] terminated: got False, expected False
+  [PASS] truncated: got False, expected False
+ (2, 1) Right (into doorway)
+  [PASS] next position: got (2, 2), expected (2, 2)
+  [PASS] reward: got -0.1, expected -0.1
+  [PASS] terminated: got False, expected False
+  [PASS] truncated: got False, expected False
+ (2, 1)  Wait (wait is valid)
+  [PASS] next position: got (2, 1), expected (2, 1)
+  [PASS] reward: got -0.1, expected -0.1
+  [PASS] terminated: got False, expected False
+  [PASS] truncated: got False, expected False
+ (2, 3) Right (reach goal)
+  [PASS] next position: got (2, 4), expected (2, 4)
+  [PASS] reward: got 10.0, expected 10.0
+  [PASS] terminated: got True, expected True
+  [PASS] truncated: got False, expected False
+ 40-step cutoff: wait from (2,0) forty times
+  [PASS] not truncated after 39 steps: got False, expected False
+  [PASS] truncated after 40 steps: got True, expected True
+  [PASS] not terminated at cutoff: got False, expected False
+  [PASS] rollout stopped (done flag): got True, expected True
+  [PASS] step after cutoff raises: got True, expected True
+ Reaching the goal on step 40 is termination, not truncation
+  [PASS] terminated: got True, expected True
+  [PASS] truncated: got False, expected False
+
+== 2. Synthetic Q-learning updates (alpha=0.2, gamma=0.95, Q(s,a)=0.4, max Q(s',.)=2) ==
+ non-terminal r=1:
+  [PASS] target: got 2.9, expected 2.9
+  [PASS] updated Q(s,a): got np.float64(0.9), expected 0.9
+ truly terminal r=5 (next-state value ignored):
+  [PASS] target: got 5.0, expected 5.0
+  [PASS] updated Q(s,a): got np.float64(1.3199999999999998), expected 1.32
+ non-terminal r=1 with truncation flag set (bootstraps):
+  [PASS] target: got 2.9, expected 2.9
+  [PASS] updated Q(s,a): got np.float64(0.9), expected 0.9
+ Integrated: real env truncation at step 40, update uses env flags
+  [PASS] truncated flag from env: got True, expected True
+  [PASS] target bootstraps: -0.1 + 0.95*2: got 1.7999999999999998, expected 1.7999999999999998
+  [PASS] td_target(terminated=True) ignores next value: got 5.0, expected 5.0
+
+== 3. DQN loss on a hand-computable batch (gamma=0.95) ==
+ rows: (non-terminal r=1), (terminal r=5), (truncated r=1)
+  [PASS] y[0] non-terminal = 1 + 0.95*2: got 2.9, expected 2.9
+  [PASS] y[1] terminal = 5: got 5.0, expected 5.0
+  [PASS] y[2] truncated bootstraps = 2.9: got 2.9, expected 2.9
+  [PASS] Q_theta(s,a) uses recorded actions [3,0,1]: got [2.0, 0.5, 1.0], expected [2.0, 0.5, 1.0]
+  [PASS] MSE loss: got 8.22333, expected 8.22333
+  [PASS] target tensor has no grad: got False, expected False
+  [PASS] online grad only on recorded actions: got [-3.0, -1.2667, 0.0, -0.6, 0.0], expected [-3.0, -1.2667, 0.0, -0.6, 0.0]
+  [PASS] no gradient reaches target network: got None, expected None
+ Same check with the real 25-64-64-5 networks:
+  [PASS] online params receive gradients: got True, expected True
+  [PASS] target params receive none: got True, expected True
+  [PASS] network output shape (batch, 5) - Q-values, no softmax: got (4, 5), expected (4, 5)
+
+== 4. Two-robot simultaneous movement and team reward ==
+ A(2, 1) Right | B(2, 3)  Left  prediction: both propose (2,2): same-cell collision, positions kept, -10, terminate
+  [PASS] state: got ((2, 1), (2, 3)), expected ((2, 1), (2, 3))
+  [PASS] reward: got -10.0, expected -10.0
+  [PASS] terminated: got True, expected True
+  [PASS] collision: got True, expected True
+ A(2, 1) Right | B(2, 2)  Left  prediction: A->(2,2), B->(2,1): swap collision, -10, terminate
+  [PASS] state: got ((2, 1), (2, 2)), expected ((2, 1), (2, 2))
+  [PASS] reward: got -10.0, expected -10.0
+  [PASS] terminated: got True, expected True
+  [PASS] collision: got True, expected True
+ A(2, 1) Right | B(2, 2) Right  prediction: A follows B into the vacated door cell: allowed, -0.1
+  [PASS] state: got ((2, 2), (2, 3)), expected ((2, 2), (2, 3))
+  [PASS] reward: got -0.1, expected -0.1
+  [PASS] terminated: got False, expected False
+  [PASS] collision: got False, expected False
+ A(2, 1)    Up | B(2, 2)  Wait  prediction: A steps aside to (1,1), B waits in door: no collision, -0.1
+  [PASS] state: got ((1, 1), (2, 2)), expected ((1, 1), (2, 2))
+  [PASS] reward: got -0.1, expected -0.1
+  [PASS] terminated: got False, expected False
+  [PASS] collision: got False, expected False
+ A(2, 1) Right | B(2, 2)  Wait  prediction: A enters waiting B's cell: collision
+  [PASS] state: got ((2, 1), (2, 2)), expected ((2, 1), (2, 2))
+  [PASS] reward: got -10.0, expected -10.0
+  [PASS] terminated: got True, expected True
+  [PASS] collision: got True, expected True
+ A(2, 1)  Wait | B(2, 2)    Up  prediction: B bumps obstacle (1,2): b=1, reward -0.1-1 = -1.1
+  [PASS] state: got ((2, 1), (2, 2)), expected ((2, 1), (2, 2))
+  [PASS] reward: got -1.1, expected -1.1
+  [PASS] terminated: got False, expected False
+  [PASS] collision: got False, expected False
+ A(0, 0)    Up | B(4, 4)  Down  prediction: both hit the boundary: b=2, reward -2.1
+  [PASS] state: got ((0, 0), (4, 4)), expected ((0, 0), (4, 4))
+  [PASS] reward: got -2.1, expected -2.1
+  [PASS] terminated: got False, expected False
+  [PASS] collision: got False, expected False
+ Robot already at its goal (A at (2,4)) stays put and is not re-rewarded
+  [PASS] A arrives: k=1, reward -0.1 + 5: got 4.9, expected 4.9
+  [PASS] not terminated (B not home): got False, expected False
+  [PASS] A ignores 'Left' at its goal: got (2, 4), expected (2, 4)
+  [PASS] no repeated arrival reward, no invalid penalty: got -0.1, expected -0.1
+  [PASS] A ignores 'Up' at its goal (no invalid count): got ((2, 4), 0), expected ((2, 4), 0)
+ Moving into a parked robot's goal cell is a collision
+  [PASS] B into parked A at (2,4): got (True, -10.0, ((2, 4), (2, 3))), expected (True, -10.0, ((2, 4), (2, 3)))
+ Both arrive in the same step: k=2, I=1 -> -0.1 + 10 + 5 = 14.9, terminate
+  [PASS] reward: got 14.9, expected 14.9
+  [PASS] terminated: got True, expected True
+ Second robot arrives later: k=1, I=1 -> -0.1 + 5 + 5 = 9.9
+  [PASS] reward: got 9.9, expected 9.9
+  [PASS] terminated: got True, expected True
+ 40 joint-step truncation
+  [PASS] truncated at 40: got (False, True), expected (False, True)
+ Joint-action encoding j = 5*a_A + a_B
+  [PASS] encode(Right, Left): got 17, expected 17
+  [PASS] divmod(17, 5): got (3, 2), expected (3, 2)
+
+ALL TESTS PASSED

@@ -1,0 +1,92 @@
+{
+  "budget": "1500 episodes",
+  "seed": 7,
+  "default": {
+    "path": [
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "actions": [
+      "Right",
+      "Right",
+      "Right",
+      "Right"
+    ],
+    "success": true,
+    "timeout": false,
+    "steps": 4,
+    "invalid": 0,
+    "return": 9.7
+  },
+  "extra_start": {
+    "path": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "actions": [
+      "Down",
+      "Down",
+      "Right",
+      "Right",
+      "Right",
+      "Right"
+    ],
+    "success": true,
+    "timeout": false,
+    "steps": 6,
+    "invalid": 0,
+    "return": 9.5
+  },
+  "random": {
+    "runs": 100,
+    "success_frac": 0.18,
+    "timeout_frac": 0.82,
+    "mean_steps_success": 26.944444444444443,
+    "mean_invalid": 9.86,
+    "total_invalid": 986
+  }
+}
